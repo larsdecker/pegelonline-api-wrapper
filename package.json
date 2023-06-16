@@ -1,0 +1,28 @@
+{
+  "name": "pegelonline-api-wrapper",
+  "version": "1.0.0",
+  "description": "A wrapper for the Pegelonline API. The API Endpoint is free of charge and can be used without registration. The API provided data about water levels, water temperatures and discharge rates of rivers in Germany. The data is provided by the Federal Waterways and Shipping Administration (WSV).",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "test": "npx ts-jest"
+  },
+  "dependencies": {
+    "axios": "~1.4.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "jest": "~29.5.0",
+    "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.1.3"
+  },
+  "keywords": [
+    "pegelonline",
+    "api",
+    "wrapper"
+  ],
+  "author": "Lars Decker",
+  "license": "ISC"
+}
