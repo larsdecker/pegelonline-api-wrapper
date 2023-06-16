@@ -16,7 +16,7 @@ describe('PegelOnlineTest', () => {
     ).toBeTruthy();
   });
 
-  it('should not use keepAlive for several request', async () => {
+  it('should use keepAlive for several request', async () => {
     const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
 
     const stationList = await pegelOnlineApiWrapper.getStationList();
