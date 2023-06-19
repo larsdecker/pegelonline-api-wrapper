@@ -1,74 +1,74 @@
-import { PegelOnlineApiWrapper } from '../src';
+import { PegelOnlineApiClient } from '../src';
 
 describe('PegelOnlineTest', () => {
   it('should use keepAlive', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper({
+    const pegelOnlineApiClient = new PegelOnlineApiClient({
       keepAlive: true
     });
 
-    const pegelOnlineApiWrapperTestDefault = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClientTestDefault = new PegelOnlineApiClient();
 
     expect(
-      pegelOnlineApiWrapper.apiClient.defaults.httpsAgent.keepAlive
+      pegelOnlineApiClient.apiClient.defaults.httpsAgent.keepAlive
     ).toBeTruthy();
     expect(
-      pegelOnlineApiWrapperTestDefault.apiClient.defaults.httpsAgent.keepAlive
+      pegelOnlineApiClientTestDefault.apiClient.defaults.httpsAgent.keepAlive
     ).toBeTruthy();
   });
 
   it('should use keepAlive for several request', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
 
-    const stationList = await pegelOnlineApiWrapper.getStationList();
-    const stationDetails = await pegelOnlineApiWrapper.getStationDetails(
+    const stationList = await pegelOnlineApiClient.getStationList();
+    const stationDetails = await pegelOnlineApiClient.getStationDetails(
       stationList[0].uuid
     );
 
     // Test if the agent with keepAlive is used for several requests
     expect(
-      pegelOnlineApiWrapper.apiClient.defaults.httpsAgent.keepAlive
+      pegelOnlineApiClient.apiClient.defaults.httpsAgent.keepAlive
     ).toBeTruthy();
     expect(stationDetails.uuid).toBe(stationList[0].uuid);
   });
 
   it('should not use keepAlive', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper({
+    const pegelOnlineApiClient = new PegelOnlineApiClient({
       keepAlive: false
     });
 
     expect(
-      pegelOnlineApiWrapper.apiClient.defaults.httpsAgent.keepAlive
+      pegelOnlineApiClient.apiClient.defaults.httpsAgent.keepAlive
     ).toBeFalsy();
   });
 
   it('should use a non default timeout', function () {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper({
+    const pegelOnlineApiClient = new PegelOnlineApiClient({
       timeout: 100
     });
 
-    expect(pegelOnlineApiWrapper.apiClient.defaults.timeout).toBe(100);
+    expect(pegelOnlineApiClient.apiClient.defaults.timeout).toBe(100);
   });
 
   it('should a non default user agent', function () {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper({
+    const pegelOnlineApiClient = new PegelOnlineApiClient({
       userAgent: 'test'
     });
 
-    expect(pegelOnlineApiWrapper.apiClient.defaults.headers['User-Agent']).toBe(
+    expect(pegelOnlineApiClient.apiClient.defaults.headers['User-Agent']).toBe(
       'test'
     );
   });
 
   it('should return stations', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
-    const stations = await pegelOnlineApiWrapper.getStationList();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
+    const stations = await pegelOnlineApiClient.getStationList();
 
     expect(stations.length).toBeGreaterThan(0);
   });
 
   it('should return a station details of Helgoland', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
-    const station = await pegelOnlineApiWrapper.getStationDetails(
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
+    const station = await pegelOnlineApiClient.getStationDetails(
       'c0ec139b-13b4-4f86-bee3-06665ad81a40'
     );
 
@@ -81,8 +81,8 @@ describe('PegelOnlineTest', () => {
   });
 
   it('should return a station details of Ahlden', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
-    const station = await pegelOnlineApiWrapper.getStationDetails(
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
+    const station = await pegelOnlineApiClient.getStationDetails(
       '522286e2-b2b3-4d0d-9a11-01b3ea418c76'
     );
 
@@ -95,19 +95,19 @@ describe('PegelOnlineTest', () => {
   });
 
   it('should return not return a Station', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
 
     // expect to throw an error
     await expect(
-      pegelOnlineApiWrapper.getStationDetails('not-existing-uuid')
+      pegelOnlineApiClient.getStationDetails('not-existing-uuid')
     ).rejects.toThrow();
   });
 
   it('should return station with more details', async function () {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
 
     const station =
-      await pegelOnlineApiWrapper.getStationDetailsWithCurrentMeasurementAndTimeSeries(
+      await pegelOnlineApiClient.getStationDetailsWithCurrentMeasurementAndTimeSeries(
         'c0ec139b-13b4-4f86-bee3-06665ad81a40'
       );
 
@@ -122,9 +122,9 @@ describe('PegelOnlineTest', () => {
   });
 
   it('should return the current measurements from a given station', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
 
-    const measurements = await pegelOnlineApiWrapper.getCurrentMeasurement(
+    const measurements = await pegelOnlineApiClient.getCurrentMeasurement(
       'c0ec139b-13b4-4f86-bee3-06665ad81a40'
     );
     expect(measurements.length).toBeGreaterThan(0);
@@ -132,15 +132,15 @@ describe('PegelOnlineTest', () => {
   });
 
   it('should not return the current measurements from a given station', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
     await expect(
-      pegelOnlineApiWrapper.getCurrentMeasurement('not-existing-uuid')
+      pegelOnlineApiClient.getCurrentMeasurement('not-existing-uuid')
     ).rejects.toThrow();
   });
 
   it('should return the historic measurements from a given station', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
-    const measurements = await pegelOnlineApiWrapper.getHistoricMeasurements(
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
+    const measurements = await pegelOnlineApiClient.getHistoricMeasurements(
       'c0ec139b-13b4-4f86-bee3-06665ad81a40',
       'P14D'
     );
@@ -149,9 +149,9 @@ describe('PegelOnlineTest', () => {
   });
 
   it('should not return the historic measurements from a given station', async () => {
-    const pegelOnlineApiWrapper = new PegelOnlineApiWrapper();
+    const pegelOnlineApiClient = new PegelOnlineApiClient();
     await expect(
-      pegelOnlineApiWrapper.getHistoricMeasurements('not-existing-uuid', 'P4D')
+      pegelOnlineApiClient.getHistoricMeasurements('not-existing-uuid', 'P4D')
     ).rejects.toThrow();
   });
 });

@@ -4,7 +4,7 @@ import { MeasurementType } from './types/measurementsType';
 import { StationTimeSeriesType } from './types/StationTimeSeriesType';
 import * as https from 'https';
 
-export class PegelOnlineApiWrapper {
+export class PegelOnlineApiClient {
   private readonly _apiClient: AxiosInstance;
 
   get apiClient(): AxiosInstance {
@@ -32,7 +32,7 @@ export class PegelOnlineApiWrapper {
       baseURL: this.baseURL,
       timeout: timeout ?? 10000,
       headers: {
-        'User-Agent': userAgent ?? require('../package.json').name
+        'User-Agent': userAgent ?? 'pegelonline-api-client-javascript'
       }
     });
   }
