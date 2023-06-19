@@ -13,17 +13,17 @@ npm install pegelonline-api-client
 
 ### Node.js
 ```javascript
-const PegelonlineApi = require('pegelonline-api-client').PegelonlineApi;
-const api = new PegelonlineApi();
+const PegelonlineApi = require('pegelonline-api-client').PegelOnlineApiClient;
+const api = new PegelOnlineApiClient();
 
-const station = await api.getStation('c0ec139b-13b4-4f86-bee3-06665ad81a40');
+const station = await api.getStationDetails('c0ec139b-13b4-4f86-bee3-06665ad81a40');
 
 ```
 ### Browser
 ```javascript
-import { PegelonlineApi } from 'pegelonline-api-client';
-const api = new PegelonlineApi();
+import { PegelOnlineApiClient } from 'pegelonline-api-client';
+const api = new PegelOnlineApiClient();
 
-const station = await api.getStation('c0ec139b-13b4-4f86-bee3-06665ad81a40');
+const station = await api.getStationDetails('c0ec139b-13b4-4f86-bee3-06665ad81a40');
 
 ```
